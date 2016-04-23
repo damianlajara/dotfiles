@@ -1,8 +1,51 @@
-# This is Git's per-user configuration file.
-[user]
-# Please adapt and uncomment the following lines:
-#	name = Damian Lajara
-#	email = dlajara@cipherhealth.com
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = /Users/damianlajara/.gitignore
+	editor = nano
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
+  who = shortlog -s --
+  up = pull
+  pr = pull --rebase
+  pu = !"git fetch origin -v; git fetch upstream -v; git merge upstream/master"
+  switch = !legit switch \"$@\"
+  branches = !legit branches
+  sprout = !legit sprout \"$@\"
+  unpublish = !legit unpublish \"$@\"
+  harvest = !legit harvest \"$@\"
+  sync = !legit sync \"$@\"
+  publish = !legit publish \"$@\"
+  graft = !legit graft \"$@\"
+[github]
+  user = damianlajara
+  token = <API token> # https://github.com/settings/applications
+  email = damiansito93@gmail.com
+[github "user"]
+  user = damianlajara
+  token = <API token>
+  email = damiansito93@gmail.com
 [user]
 	name = Damian Lajara
-	email = dlajara@cipherhealth.com
+	email = damiansito93@gmail.com
+[color]
+	ui = true
+  diff = auto
+  status = auto
+  branch = auto
+[format]
+  pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+[diff "ruby"]
+  funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
+[push]
+	default = simple
+[merge]
+  tool = opendiff
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
