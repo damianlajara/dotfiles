@@ -10,6 +10,7 @@ Big configurations come in small packages :D
 * Install all these [fonts](https://github.com/powerline/fonts) on your system. My favorite to use is Meslo
 * Go to your iTerm font settings and make sure you change the font (both regular and non-ascii) to your new powerline font of choice
 * Go to your iTerm color/theme settings and import all of the themes you just downloaded
+* Install searching tool Ag (A.K.A "the silver searcher"): `brew install the_silver_searcher`
 * Install tmux: `brew install tmux`
 * Optional - Install tmuxinator `gem install tmuxinator`
 * And you're done!
