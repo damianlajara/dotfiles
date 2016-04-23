@@ -6,6 +6,7 @@ Big configurations come in small packages :D
 * Download iterm2
 * Install Zsh (Check with zsh --version since you probably already have it :p)
 * Install [Oh-My-Zsh](https://github.com/robbyrussell/oh-my-zsh)
+* Install the powerlevel9k [zsh theme](https://github.com/bhilburn/powerlevel9k)
 * Download all these [iTerm themes](https://github.com/mbadolato/iTerm2-Color-Schemes). You can never go wrong with more style!
 * Install all these [fonts](https://github.com/powerline/fonts) on your system. My favorite to use is Meslo
 * Go to your iTerm font settings and make sure you change the font (both regular and non-ascii) to your new powerline font of choice
