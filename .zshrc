@@ -1,7 +1,7 @@
 # ZShell Config
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/damian/.oh-my-zsh
+export ZSH="/Users/$(whoami)/.oh-my-zsh"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -33,10 +33,10 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -46,7 +46,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -60,7 +60,8 @@ plugins=(git zsh-autosuggestions bundler osx rake ruby rails last-working-dir np
 
 # User configuration
 
-export PATH="$PATH:/Users/damian/.rvm/gems/ruby-2.2.2/bin:/Users/damian/.rvm/gems/ruby-2.2.2@global/bin:/Users/damian/.rvm/rubies/ruby-2.2.2/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/9.4/bin:/Users/damian/.rvm/bin"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2/bin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.2.2/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/$(whoami)/.rvm/bin:/Users/$(whoami)lajara/.rvm/bin"
+#export PATH="$PATH:/Users/$(whoami)/.rvm/gems/ruby-2.2.2/bin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.2.2/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/9.4/bin:/Users/$(whoami)/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Environment Variables
@@ -80,9 +81,12 @@ export PATH="$PATH:/Users/damian/.rvm/gems/ruby-2.2.2/bin:/Users/damian/.rvm/gem
 
   # Configurations
 
+    # Android SDK
+    # export ANDROID_HOME="/usr/local/opt/android-sdk"
+    export ANDROID_HOME="/Users/$(whoami)/Library/Android/sdk"
     # GIT_MERGE_AUTO_EDIT
     # This variable configures git to not require a message when you merge.
-    export GIT_MERGE_AUTOEDIT='no'
+    export GIT_MERGE_AUTOEDIT="no"
 
     # Editors
     # Tells your shell that when a program requires various editors, use atom.
@@ -117,6 +121,39 @@ HOSTNAME=$(hostname)
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
+# Helpful Functions
+# =====================
+
+# A function to easily grep for a matching process
+# USE: psg postgres
+function psg {
+  FIRST=`echo $1 | sed -e 's/^\(.\).*/\1/'`
+  REST=`echo $1 | sed -e 's/^.\(.*\)/\1/'`
+  ps aux | grep "[$FIRST]$REST"
+}
+
+# A function to extract correctly any archive based on extension
+# USE: extract imazip.zip
+#      extract imatar.tar
+function extract () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)  tar xjf $1      ;;
+            *.tar.gz)   tar xzf $1      ;;
+            *.bz2)      bunzip2 $1      ;;
+            *.rar)      rar x $1        ;;
+            *.gz)       gunzip $1       ;;
+            *.tar)      tar xf $1       ;;
+            *.tbz2)     tar xjf $1      ;;
+            *.tgz)      tar xzf $1      ;;
+            *.zip)      unzip $1        ;;
+            *.Z)        uncompress $1   ;;
+            *)          echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
 # Example aliases
   # Zshell Config
   # alias zshconfig=‘open ~/.zshrc'
@@ -146,7 +183,7 @@ HOSTNAME=$(hostname)
   alias up4='cd ../../../..'
   alias home=' cd ~'
   alias documents='cd ~/Documents'
-  alias flatiron='cd ~/FlatironPrepwork'
+  alias desktop='cd ~/Desktop'
 
   # Grep
   alias grep='grep --color=auto'
@@ -187,9 +224,8 @@ HOSTNAME=$(hostname)
   # Git commit
   alias gc="git commit -v"
   alias gca="git commit -v -a"
-  alias gcam="git commit -am"
   alias gcm="git commit -m"
-  alias gcam="git commit —amend"
+  alias gcam="git commit --amend"
   # Git rebase
   alias gr="git rebase"
   alias gri="git rebase --interactive"
@@ -212,19 +248,37 @@ HOSTNAME=$(hostname)
   alias gl="git log"
   alias glp="log --pretty=format:\"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate --date=relative"
 
+  # Http Server
+  alias node_server="http-server -o -c-1"
+
   # Heroku environment
   alias heroku_prepare="RAILS_ENV=production bundle exec rake assets:precompile"
 
   # Rspec
   alias rff="rspec --fail-fast"
   # Variable segments for theme: (https://github.com/bhilburn/powerlevel9k)
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time battery root_indicator)
-
+  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir rbenv vcs)
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time root_indicator)
+  # Run android emulator - make sure it is defined in the AVD manager from android studio
+  # alias android_emulator="/usr/local/opt/android-sdk/tools/emulator -netdelay none -netspeed full -avd Nexus_5X_API_23"
+  alias android_emulator="/Users/$(whoami)/Library/Android/sdk/tools/emulator -netdelay none -netspeed full -avd Nexus_5_API_23"
   # Open .zshrc in atom
-  alias zconfig="atom -n ~/.zshrc"
+  alias zshconfig="atom -n ~/.zshrc"
+
+  alias zshreload="source ~/.zshrc"
+
+  alias rnra="react-native run-android"
+  alias rnla="react-native log-android"
+  alias rnri="react-native run-ios"
+  alias rnli="react-native log-ios"
+
+  # http://stackoverflow.com/questions/32613492/cmd-react-native-run-android-on-every-file-change
+  alias rnamenu="adb shell input keyevent 82"
+
   # RVM
   # Mandatory loading of RVM into the shell
   # This must be the last line of your profile always
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+# source ~/.rvm/scripts/rvm
+# export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
