@@ -15,7 +15,7 @@ Big configurations come in small packages :D
   * Install [Settings Sync](https://github.com/shanalikhan/code-settings-sync) plugin (Make sure to use secret key and gist id)
   * Download and run this [script](https://github.com/damianlajara/install_vscode_extensions) if extensions did not install with the above
 
-  ## Optional
+## Optional
 * Install searching tool Ag (A.K.A "the silver searcher"): `brew install the_silver_searcher`
 * Install tmux: `brew install tmux`
 * Optional - Install tmuxinator `gem install tmuxinator`
