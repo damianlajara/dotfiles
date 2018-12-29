@@ -8,7 +8,7 @@ export ZSH="/Users/$(whoami)/.oh-my-zsh"
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # https://github.com/bhilburn/powerlevel9k
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="spaceship/spaceship"
 
 ##### Also make sure to install these fonts!!! (I prefer Meslo)
 # https://github.com/powerline/fonts
@@ -56,11 +56,11 @@ HIST_STAMPS="mm/dd/yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(git zsh-autosuggestions bundler osx rake ruby rails last-working-dir npm brew bower node battery web-search)
+plugins=(git git-flow-avh zsh-autosuggestions osx ruby rails last-working-dir npm brew node react-native battery web-search emotty)
 
 # User configuration
 
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2/bin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.2.2/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/$(whoami)/.rvm/bin:/Users/$(whoami)lajara/.rvm/bin"
+export PATH="$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2/bin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.2.2/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:/Users/$(whoami)/.rvm/bin:/opt/td-agent/usr/sbin:/usr/local/bin/code"
 #export PATH="$PATH:/Users/$(whoami)/.rvm/gems/ruby-2.2.2/bin:/Users/$(whoami)/.rvm/gems/ruby-2.2.2@global/bin:/Users/$(whoami)/.rvm/rubies/ruby-2.2.2/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/9.4/bin:/Users/$(whoami)/.rvm/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -89,9 +89,9 @@ export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/$(whoami)
     export GIT_MERGE_AUTOEDIT="no"
 
     # Editors
-    # Tells your shell that when a program requires various editors, use atom.
-    # The -w flag tells your shell to wait until atom exits
-    export VISUAL="atom -w"
+    # Tells your shell that when a program requires various editors, use code.
+    # The -w flag tells your shell to wait until code exits
+    export VISUAL="code -w"
     export SVN_EDITOR="nano"
     export GIT_EDITOR="/usr/bin/nano"
 
@@ -102,9 +102,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR=‘atom -w’
+#   export EDITOR=‘code -w’
 # else
-#   export EDITOR=‘atom -w’
+#   export EDITOR=‘code -w’
 # fi
 
 # Compilation flags
@@ -154,17 +154,28 @@ function extract () {
         echo "'$1' is not a valid file"
     fi
 }
+
+function bert () {
+	if [ -z "$1" ]; then
+			time bundle exec rake test;
+	else
+			time bundle exec rake test TEST=$1;
+	fi
+}
 # Example aliases
   # Zshell Config
   # alias zshconfig=‘open ~/.zshrc'
   # alias ohmyzsh=‘open ~/.oh-my-zsh'
+
+  # Rails
+  alias berc='bundle exec rails console'
 
   # Finder
   alias showall='defaults write com.apple.finder AppleShowAllFiles -bool true'
   alias hideall='defaults write com.apple.finder AppleShowAllFiles -bool false'
   alias restart='killall Finder'
 
-  # Atom
+  # atom
   alias atomn='atom -n' # Open atom in a new window
 
   # Mkdir
@@ -205,6 +216,7 @@ function extract () {
   alias gpl="git pull"
   # Git push
   alias gp="git push"
+  alias gpf="git push --force-with-lease"
   alias gpom="git push -u origin master"
   alias gpo="git push -u origin"
   # Git add
@@ -256,14 +268,11 @@ function extract () {
 
   # Rspec
   alias rff="rspec --fail-fast"
-  # Variable segments for theme: (https://github.com/bhilburn/powerlevel9k)
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir rbenv vcs)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time root_indicator)
   # Run android emulator - make sure it is defined in the AVD manager from android studio
   # alias android_emulator="/usr/local/opt/android-sdk/tools/emulator -netdelay none -netspeed full -avd Nexus_5X_API_23"
-  alias android_emulator="/Users/$(whoami)/Library/Android/sdk/tools/emulator -netdelay none -netspeed full -avd Nexus_5_API_23"
-  # Open .zshrc in atom
-  alias zshconfig="atom -n ~/.zshrc"
+  alias android_emulator="/Users/$(whoami)/Library/Android/sdk/tools/emulator -netdelay none -netspeed full -avd Pixel_API_24"
+  # Open .zshrc in code
+  alias zshconfig="code -n ~/.zshrc"
 
   alias zshreload="source ~/.zshrc"
 
@@ -275,10 +284,14 @@ function extract () {
   # http://stackoverflow.com/questions/32613492/cmd-react-native-run-android-on-every-file-change
   alias rnamenu="adb shell input keyevent 82"
 
+  # Creates alias "fuck" from the 'thefuck' package
+  eval "$(thefuck --alias FUCK)"
+
   # RVM
   # Mandatory loading of RVM into the shell
   # This must be the last line of your profile always
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-# source ~/.rvm/scripts/rvm
-# export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+  source ~/.rvm/scripts/rvm
+	# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+  export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
