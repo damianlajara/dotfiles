@@ -25,3 +25,6 @@ Big configurations come in small packages :D
   * [Optional] Download and run this [script](https://github.com/damianlajara/install_vscode_extensions) if extensions did not install with the above
 
 And you're done!
+
+Here is an example of how it will look like:
+![Example of above steps](./sample.png)
