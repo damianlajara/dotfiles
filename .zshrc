@@ -8,7 +8,11 @@ export ZSH="/Users/damianlajara/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="spaceship/spaceship"
+# https://github.com/denysdovhan/spaceship-prompt
+ZSH_THEME="spaceship-prompt/spaceship"
+SPACESHIP_PROMPT_ADD_NEWLINE="true"
+SPACESHIP_PROMPT_SEPARATE_LINE="true"
+SPACESHIP_TIME_SHOW="true"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -263,6 +267,3 @@ alias zshreload="source ~/.zshrc"
 # Creates alias "fuck" from the 'thefuck' package (brew install thefuck first)
 # https://github.com/nvbn/thefuck
 # eval "$(thefuck --alias FUCK)"
-
-# To activate the zsh autosuggestions that were added to the plugins (Make sure to install with brew)
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
